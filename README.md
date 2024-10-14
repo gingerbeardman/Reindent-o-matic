@@ -2,7 +2,7 @@
 
 Reindent-o-matic is an extension for the [Nova editor](https://nova.app).
 
-It reapplies .editorconfig indent rules to the current file or all matching files
+It reapplies .editorconfig indent rules to the current file or all files matching specific extensions
 
 See the internal [README](/Reindent-o-matic.novaextension/README.md) for more info.
 

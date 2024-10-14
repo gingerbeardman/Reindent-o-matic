@@ -1,10 +1,8 @@
-// main.js
 exports.activate = function() {
 	console.log("Reindent-o-matic extension activated");
 	nova.commands.register("com.gingerbeardman.editorconfig.indent.reapplyIndent", reapplyIndent);
 	nova.commands.register("com.gingerbeardman.editorconfig.indent.reapplyIndentCurrentFile", reapplyIndentCurrentFile);
 }
-
 
 function getAllFiles(dir, extensions) {
 	const fs = nova.fs;

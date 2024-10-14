@@ -1,6 +1,6 @@
 **Reindent-o-matic** allows you to apply .editorconfig indent rules to your files!
 
-It can be run on the current file, or every file in your project matching specified file extensions.
+It can be run on the current file, or all files matching specific extensions.
 
 > Important: changes are applied but not saved, giving you the opportunity to review.
 
