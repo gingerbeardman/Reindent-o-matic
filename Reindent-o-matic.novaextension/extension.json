@@ -1,47 +1,46 @@
 {
-    "identifier": "com.gingerbeardman.Reindent-o-matic",
-    "name": "Reindent-o-matic",
-    "organization": "gingerbeardman",
-    "description": "Reapplies indentation based on .editorconfig settings",
-    "version": "1.0.1",
-    "repository": "https://github.com/gingerbeardman/Reindent-o-matic",
-    "bugs": "https://github.com/gingerbeardman/Reindent-o-matic/issues",
-    "homepage": "https://www.gingerbeardman.com",
-    "funding": "https://ko-fi.com/gingerbeardman",
-    "categories": ["commands"],
-    "entitlements": {
-        "filesystem": "readwrite",
-        "clipboard": true
-    },
-    "main": "main.js",
-    "activationEvents": [
-        "onCommand:com.gingerbeardman.editorconfig.indent.reapplyIndent",
-        "onCommand:com.gingerbeardman.editorconfig.indent.reapplyIndentCurrentFile"
-    ],
-    "commands": {
-        "editor": [
-            {
-                "title": "Apply .editorconfig indentation to current file",
-                "command": "com.gingerbeardman.editorconfig.indent.reapplyIndentCurrentFile"
-            },
-            {
-                "title": "Apply .editorconfig indentation to all matching files",
-                "command": "com.gingerbeardman.editorconfig.indent.reapplyIndent"
-            }
-        ]
-    },
-    "config": [
-        {
-            "key": "com.gingerbeardman.indent.extensionsToProcess",
-            "title": "File Extensions to Process (comma-separated)",
-            "type": "string",
-            "default": ".lua,.md,.markdown"
-        },
-        {
-            "key": "com.gingerbeardman.indent.showResults",
-            "title": "Show results confirmation",
-            "type": "boolean",
-            "default": true
-        }
-    ]
+	"identifier": "com.gingerbeardman.Reindent-o-matic",
+	"name": "Reindent-o-matic",
+	"organization": "gingerbeardman",
+	"description": "Reapplies .editorconfig indent rules to the current file or all matching files",
+	"version": "1.0.0",
+	"repository": "https://github.com/gingerbeardman/Reindent-o-matic",
+	"bugs": "https://github.com/gingerbeardman/Reindent-o-matic/issues",
+	"homepage": "https://www.gingerbeardman.com",
+	"funding": "https://ko-fi.com/gingerbeardman",
+	"categories": ["commands"],
+	"entitlements": {
+		"filesystem": "readonly"
+	},
+	"main": "main.js",
+	"activationEvents": [
+		"onCommand:com.gingerbeardman.editorconfig.indent.reapplyIndent",
+		"onCommand:com.gingerbeardman.editorconfig.indent.reapplyIndentCurrentFile"
+	],
+	"commands": {
+		"editor": [
+			{
+				"title": "Apply .editorconfig indentation to current file",
+				"command": "com.gingerbeardman.editorconfig.indent.reapplyIndentCurrentFile"
+			},
+			{
+				"title": "Apply .editorconfig indentation to all matching files",
+				"command": "com.gingerbeardman.editorconfig.indent.reapplyIndent"
+			}
+		]
+	},
+	"config": [
+		{
+			"key": "com.gingerbeardman.indent.showResults",
+			"title": "Show Results Confirmation",
+			"type": "boolean",
+			"default": true
+		},
+		{
+			"key": "com.gingerbeardman.indent.extensionsToProcess",
+			"title": "File Extensions to Process (comma-separated)",
+			"type": "string",
+			"default": ".lua,.md,.markdown"
+		}
+	]
 }

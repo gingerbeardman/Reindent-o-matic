@@ -1,72 +1,58 @@
-<!--
-👋 Hello! As Nova users browse the extensions library, a good README can help them understand what your extension does, how it works, and what setup or configuration it may require.
+**Reindent-o-matic** allows you to apply .editorconfig indent rules to your files!
 
-Not every extension will need every item described below. Use your best judgement when deciding which parts to keep to provide the best experience for your new users.
+It can be run on the current file, or every file in your project matching specified file extensions.
 
-💡 Quick Tip! As you edit this README template, you can preview your changes by selecting **Extensions → Activate Project as Extension**, opening the Extension Library, and selecting "Reindentomatic" in the sidebar.
-
-Let's get started!
--->
-
-<!--
-🎈 Include a brief description of the features your extension provides. For example:
--->
-
-**Reindentomatic** provides integration with **A Helpful Tool**, including the most important feature, something that's really helpful, and _a little-known secret!_
-
-<!--
-🎈 It can also be helpful to include a screenshot or GIF showing your extension in action:
--->
-
-![](https://nova.app/images/en/dark/editor.png)
-
-## Requirements
-
-<!--
-🎈 If your extension depends on external processes or tools that users will need to have, it's helpful to list those and provide links to their installers:
--->
-
-Reindentomatic requires some additional tools to be installed on your Mac:
-
-- [Node.js 8.2.0](https://nodejs.org) and NPM 5.2.0 or newer
-
-<!--
-✨ Providing tips, tricks, or other guides for installing or configuring external dependencies can go a long way toward helping your users have a good setup experience:
--->
-
-> To install the current stable version of Node, click the "Recommended for Most Users" button to begin the download. When that completes, double-click the **.pkg** installer to begin installation.
+> Important: changes are applied but not saved, giving you the opportunity to review.
 
 ## Usage
 
-<!--
-🎈 If users will interact with your extension manually, describe those options:
--->
+To run Reindent-o-matic:
 
-To run Reindentomatic:
+- Select the **Editor → Reindent-o-matic**
+- Open the command palette and type `Indent` 
 
-- Select the **Editor → Reindentomatic** menu item; or
-- Open the command palette and type `Reindentomatic`
+You might also choose to set a keyboard shortcut using **Nova → Settings... → Key Bindings**, such as:
 
-<!--
-🎈 Alternatively, if your extension runs automatically (as in the case of a validator), consider showing users what they can expect to see:
--->
+- `Cmd`+`Shift`+`R` to invoke **Apply .editorconfig indentation to current file**
+- `Cmd`+`Shift`+`Option`+`R` to invoke **Apply .editorconfig indentation to all matching files**
 
-Reindentomatic runs any time you open a local project, automatically lints all open files, then reports errors and warnings in Nova's **Issues** sidebar and the editor gutter:
+## Results
 
-![](https://nova.app/images/en/light/tools/sidebars.png)
+1. Spaces to Tabs
 
-### Configuration
+	If your .editorconfig is set to:
 
-<!--
-🎈 If your extension offers global- or workspace-scoped preferences, consider pointing users toward those settings. For example:
--->
+	```
+	indent_style = space
+	indent_size = 2
+	```
 
-To configure global preferences, open **Extensions → Extension Library...** then select Reindentomatic's **Preferences** tab.
+	After running:
+	
+	- any line starting with tabs will have each tab replaced with 2 spaces.
 
-You can also configure preferences on a per-project basis in **Project → Project Settings...**
+2. Tabs to Spaces
 
-<!--
-👋 That's it! Happy developing!
+	If your .editorconfig is set to:
 
-P.S. If you'd like, you can remove these comments before submitting your extension 😉
--->
+	```
+	indent_style = tab
+	indent_size = 4
+	```
+
+	After running:
+	
+	- any line starting with spaces will have groups of 4 spaces replaces with single tabs.
+
+	> Important: partial intending is ignored, so if there is a line with an indent of 3 spaces _it will not be converted to a tab_.
+
+## Configuration
+
+To configure global preferences, open **Extensions → Extension Library...** then select Reindent-o-matic's **Settings** tab.
+
+You can customise the following:
+
+- Show Results Confirmation
+	- default: `true`
+- File Extensions to Process (comma-separated)
+	- default: `.lua,.md,.markdown`
