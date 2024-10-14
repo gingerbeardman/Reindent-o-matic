@@ -1,12 +1,12 @@
-# Markdown File Linker
+# Reindent-o-matic
 
-Markdown File Linker is an extension for the [Nova editor](https://nova.app).
+Reindent-o-matic is an extension for the [Nova editor](https://nova.app).
 
-Easily insert links to local files as Markdown, perfect for linking between articles in your Jekyll blog!
+It reapplies .editorconfig indent rules to the current file or all matching files
 
-See the internal [README](/Markdown%20File%20Linker.novaextension/README.md) for more info.
+See the internal [README](/Reindent-o-matic.novaextension/README.md) for more info.
 
-Recommended download from [Nova Extensions](https://extensions.panic.com/extensions/com.gingerbeardman/com.gingerbeardman.MarkdownFileLinker/) website.
+Recommended download from [Nova Extensions](https://extensions.panic.com/extensions/com.gingerbeardman/com.gingerbeardman.Reindent-o-matic/) website.
 
 # Licence
 
