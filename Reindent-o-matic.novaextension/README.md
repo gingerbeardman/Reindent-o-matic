@@ -23,8 +23,8 @@ You might also choose to set a keyboard shortcut using **Nova â†’ Settings... â†
 	If your .editorconfig is set to:
 
 	```
-	indent_style = space
-	indent_size = 2
+	indent_style = space  
+	indent_size = 2  
 	```
 
 	After running:
@@ -36,8 +36,8 @@ You might also choose to set a keyboard shortcut using **Nova â†’ Settings... â†
 	If your .editorconfig is set to:
 
 	```
-	indent_style = tab
-	indent_size = 4
+	indent_style = tab  
+	indent_size = 4  
 	```
 
 	After running:
