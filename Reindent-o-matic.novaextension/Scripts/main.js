@@ -58,9 +58,8 @@ async function reapplyIndent() {
 			throw new Error("Invalid or missing indent settings in .editorconfig");
 		}
 
-		const extensionsConfig = nova.config.get('com.gingerbeardman.indent.extensionsToProcess') || ".lua,.md,.markdown";
-		const extensions = extensionsConfig.split(',').map(ext => ext.trim());
-		console.log(`File extensions to process: ${extensions.join(', ')}`);
+		const extensions = nova.config.get('com.gingerbeardman.indent.extensionsToProcess') || [".lua",".md",".markdown"];
+		console.log(`File extensions to process: ${extensions}`);
 
 		console.log("Searching for files to process...");
 		const files = getAllFiles(workspace.path, extensions);
