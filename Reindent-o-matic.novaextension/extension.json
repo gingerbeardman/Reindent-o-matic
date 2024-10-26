@@ -3,7 +3,7 @@
 	"name": "Reindent-o-matic",
 	"organization": "gingerbeardman",
 	"description": "Reapplies .editorconfig indent rules to the current file or all files matching specific extensions",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"repository": "https://github.com/gingerbeardman/Reindent-o-matic",
 	"bugs": "https://github.com/gingerbeardman/Reindent-o-matic/issues",
 	"homepage": "https://www.gingerbeardman.com",

@@ -104,7 +104,7 @@ async function reapplyIndent() {
 		}
 	} catch (error) {
 		console.error("Error in reapplyIndent:", error.message);
-		nova.workspace.showErrorMessage(error.message);
+		// nova.workspace.showErrorMessage(error.message);
 	}
 }
 
@@ -174,7 +174,7 @@ async function reapplyIndentCurrentFile() {
 		}
 	} catch (error) {
 		console.error("Error in reapplyIndentCurrentFile:", error.message);
-		nova.workspace.showErrorMessage(error.message);
+		// nova.workspace.showErrorMessage(error.message);
 	}
 }
 
@@ -190,23 +190,30 @@ function reindentLine(line, indentStyle, indentSize) {
 	const leadingWhitespace = line.match(/^(\s*)/)[0];
 	const content = line.slice(leadingWhitespace.length);
 	
-	let spaceCount;
+	// Count the number of tabs and spaces in the leading whitespace
+	const tabCount = (leadingWhitespace.match(/\t/g) || []).length;
+	const spaceCount = (leadingWhitespace.match(/ /g) || []).length;
+	
+	// Calculate total spaces needed
+	let totalSpaces;
 	if (indentStyle === 'space') {
-		spaceCount = leadingWhitespace.length;
+		// If converting to spaces, each tab becomes indentSize spaces
+		totalSpaces = (tabCount * indentSize) + spaceCount;
 	} else if (indentStyle === 'tab') {
-		spaceCount = leadingWhitespace.split('\t').length - 1;
-		spaceCount *= indentSize;
-		spaceCount += leadingWhitespace.split('\t').pop().length;
+		// If converting to tabs, calculate how many tabs and remaining spaces we need
+		totalSpaces = spaceCount + (tabCount * indentSize);
 	}
 	
-	const fullIndentCount = Math.floor(spaceCount / indentSize);
-	const partialIndentCount = spaceCount % indentSize;
-	
+	// Create new indentation
 	let newIndent = '';
 	if (indentStyle === 'space') {
-		newIndent = ' '.repeat(fullIndentCount * indentSize + partialIndentCount);
+		// For spaces, simply repeat the space character
+		newIndent = ' '.repeat(totalSpaces);
 	} else if (indentStyle === 'tab') {
-		newIndent = '\t'.repeat(fullIndentCount) + ' '.repeat(partialIndentCount);
+		// For tabs, calculate full tabs and remaining spaces
+		const fullTabs = Math.floor(totalSpaces / indentSize);
+		const remainingSpaces = totalSpaces % indentSize;
+		newIndent = '\t'.repeat(fullTabs) + ' '.repeat(remainingSpaces);
 	}
 	
 	return newIndent + content;
