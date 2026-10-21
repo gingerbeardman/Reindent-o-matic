@@ -1,26 +1,66 @@
+const MAX_FILES_WITHOUT_CONFIRMATION = 50;
+
 exports.activate = function() {
 	console.log("Reindent-o-matic extension activated");
 	nova.commands.register("com.gingerbeardman.editorconfig.indent.reapplyIndent", reapplyIndent);
 	nova.commands.register("com.gingerbeardman.editorconfig.indent.reapplyIndentCurrentFile", reapplyIndentCurrentFile);
 }
 
-function getAllFiles(dir, extensions) {
+function getAllFiles(dir, extensions, results = []) {
 	const fs = nova.fs;
-	let results = [];
 	const list = fs.listdir(dir);
 	
 	for (let file of list) {
+		const name = file;
 		file = nova.path.join(dir, file);
 		const stat = fs.stat(file);
+		if (!stat) continue;
 		
 		if (stat.isDirectory()) {
-			results = results.concat(getAllFiles(file, extensions));
+			// Skip hidden folders (.git etc.) and node_modules
+			if (name.startsWith('.') || name === 'node_modules') continue;
+			getAllFiles(file, extensions, results);
 		} else if (extensions.some(ext => file.endsWith(ext))) {
 			results.push(file);
 		}
 	}
 	
 	return results;
+}
+
+function reindentText(text, indentStyle, indentSize) {
+	return text.split('\n').map(line => reindentLine(line, indentStyle, indentSize)).join('\n');
+}
+
+// Check on disk whether a file needs reindenting, so that only files with
+// changes are opened in editors. Returns true if unsure (eg. unreadable file).
+function fileNeedsReindent(path, indentStyle, indentSize) {
+	const openDocument = (nova.workspace.textDocuments || []).find(doc => doc.path === path);
+	if (openDocument && openDocument.isDirty) {
+		return true;
+	}
+	
+	let file;
+	try {
+		file = nova.fs.open(path, "r");
+		const text = file.read() || "";
+		return text !== reindentText(text, indentStyle, indentSize);
+	} catch (error) {
+		console.warn(`Could not read file ${path}:`, error);
+		return true;
+	} finally {
+		if (file) file.close();
+	}
+}
+
+function confirmProcessing(count) {
+	return new Promise(resolve => {
+		nova.workspace.showActionPanel(
+			`${count} files need indentation changes and will each be opened in a new tab.\n\nContinue?`,
+			{ buttons: ["Open Files", "Cancel"] },
+			index => resolve(index === 0)
+		);
+	});
 }
 
 async function reapplyIndent() {
@@ -65,9 +105,18 @@ async function reapplyIndent() {
 		const files = getAllFiles(workspace.path, extensions);
 		console.log(`Found ${files.length} files to process`);
 
-		let processedFiles = 0;
+		// Only open editors for files that actually need changes
+		const filesToChange = files.filter(file => fileNeedsReindent(file, indentStyle, indentSize));
+		console.log(`${filesToChange.length} files need changes`);
+
+		if (filesToChange.length > MAX_FILES_WITHOUT_CONFIRMATION && !(await confirmProcessing(filesToChange.length))) {
+			console.log("Reapply indent cancelled by user");
+			return;
+		}
+
+		let processedFiles = files.length - filesToChange.length;
 		let changedFiles = 0;
-		for (const file of files) {
+		for (const file of filesToChange) {
 			console.log(`Processing file: ${file}`);
 			try {
 				const editor = await nova.workspace.openFile(file);
